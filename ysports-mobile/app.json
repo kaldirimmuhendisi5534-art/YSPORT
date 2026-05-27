@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
-      }
+      },
+      "usesCleartextTraffic": true
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -25,6 +26,9 @@
       "eas": {
         "projectId": "2403cdc9-f8fa-4b3f-a765-4772ac7ece3e"
       }
-    }
+    },
+    "plugins": [
+      "expo-asset"
+    ]
   }
 }
