@@ -292,6 +292,20 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
   0% { transform: scale(0.95); opacity: 0.8; }
   100% { transform: scale(1.05); opacity: 1; }
 }
+/*  SETTINGS TOGGLE SWITCH  */
+.setting-group { background: var(--card2); border-radius: 16px; padding: 0 14px; margin-bottom: 20px; border: 1px solid var(--border); }
+.setting-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.setting-row:last-child { border-bottom: none; }
+.setting-info { display: flex; flex-direction: column; }
+.setting-title { font-size: 13px; font-weight: 600; color: #fff; }
+.setting-desc { font-size: 10px; color: var(--muted); margin-top: 3px; }
+.toggle-switch { position: relative; width: 44px; height: 24px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--card); transition: .4s; border-radius: 24px; border: 1px solid var(--border); }
+.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 2px; bottom: 2px; background-color: #cbd5e1; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background: linear-gradient(135deg, var(--blue), var(--purple)); border-color: transparent; }
+input:checked + .slider:before { transform: translateX(20px); background-color: #fff; }
+.sec-hdr-settings { font-size: 11px; font-weight: 700; color: var(--dim); margin-bottom: 8px; letter-spacing: 1px; text-transform: uppercase; padding-left: 4px; }
 </style>
 </head>
 <body>
@@ -1035,71 +1049,115 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;heigh
        S15: SPORCU PROFİLİ (P15 PROFILE PAGE)
        ══════════════════════════════════════════ -->
   <div class="screen" id="pg15">
-    <div class="topbar"><button class="back-btn" onclick="pg('pg4')">‹</button><div class="tb-title">👤 Profil Ayarları</div></div>
+    <div class="topbar"><button class="back-btn" onclick="pg('pg4')"><</button><div class="tb-title">⚙️ Ayarlar</div></div>
     <div class="scroll" style="padding:16px;">
-      <div style="text-align:center; margin-bottom:14px;">
-        <div style="width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg, var(--blue), var(--purple)); font-size:36px; display:flex; align-items:center; justify-content:center; margin:0 auto 8px;" id="mobProfilePic">🧑</div>
-        <label class="btn-s" style="display:inline-block; padding:4px 10px; font-size:10px; width:auto; margin:0;">
-          Resim Değiştir
-          <input type="file" accept="image/*" style="display:none;" onchange="simProfileImageMob(event)">
-        </label>
+      
+      <!-- HESAP AYARLARI -->
+      <div class="sec-hdr-settings">Hesap & Güvenlik</div>
+      <div class="setting-group" style="padding-top:10px;">
+        <div style="text-align:center; margin-bottom:14px;">
+          <div style="width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg, var(--blue), var(--purple)); font-size:36px; display:flex; align-items:center; justify-content:center; margin:0 auto 8px;" id="mobProfilePic">🧑</div>
+          <label class="btn-s" style="display:inline-block; padding:4px 10px; font-size:10px; width:auto; margin:0;">
+            Resim Değiştir
+            <input type="file" accept="image/*" style="display:none;" onchange="simProfileImageMob(event)">
+          </label>
+        </div>
+        <div class="field"><label>Ad</label><input class="inp" id="mobProfAd" value="Ömer"></div>
+        <div class="field"><label>Soyad</label><input class="inp" id="mobProfSoyad" value="Yılmaz"></div>
+        <div class="field"><label>Yaş</label><input class="inp" type="number" id="mobProfYas" value="11"></div>
+        <div class="field"><label>Şehir</label><input class="inp" id="mobProfSehir" value="Samsun"></div>
+        <div class="field"><label>Branş</label><input class="inp" id="mobProfBrans" value="Karate"></div>
+        <button class="btn-p" style="margin-top:4px; margin-bottom:14px;" onclick="saveProfileMob()">Kaydet ve Güncelle</button>
       </div>
 
-      <div class="field"><label>Ad</label><input class="inp" id="mobProfAd" value="Ömer"></div>
-      <div class="field"><label>Soyad</label><input class="inp" id="mobProfSoyad" value="Yılmaz"></div>
-      <div class="field"><label>Yaş</label><input class="inp" type="number" id="mobProfYas" value="11"></div>
-      <div class="field"><label>Şehir</label><input class="inp" id="mobProfSehir" value="Samsun"></div>
-      <div class="field"><label>Branş</label><input class="inp" id="mobProfBrans" value="Karate"></div>
-
-      <button class="btn-p" style="margin-top:10px;" onclick="saveProfileMob()">Kaydet ve Profil Güncelle</button>
-
-      <!-- RESMİ SÖZLEŞMELER ALANI -->
-      <div style="margin-top:24px;">
-        <div class="sec-hdr">
-          <span class="sec-title">Resmi Sözleşmeler & Hukuk 📜</span>
+      <!-- UYGULAMA TERCİHLERİ -->
+      <div class="sec-hdr-settings">Uygulama Tercihleri</div>
+      <div class="setting-group">
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-title">Karanlık Mod (Dark Mode)</div>
+            <div class="setting-desc">Göz yormayan siyah arayüz</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+          </label>
         </div>
-        <div class="card2" style="padding:4px 0;">
-          <div class="s-row" onclick="openContractModal('athlete')">
-            <div class="s-icon" style="background:rgba(26,79,255,0.15); color:var(--blue);">🏃</div>
-            <div class="s-info">
-              <div class="s-title">Sporcu İmaj & Veri Sözleşmesi</div>
-              <div class="s-sub">Performans ve KVKK Metni</div>
-            </div>
-            <div style="color:var(--dim);">›</div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-title">Push Bildirimleri</div>
+            <div class="setting-desc">Sponsorluk tekliflerini anında al</div>
           </div>
-          <div class="s-row" onclick="openContractModal('sponsor')">
-            <div class="s-icon" style="background:rgba(0,185,122,0.15); color:var(--green);">🤝</div>
-            <div class="s-info">
-              <div class="s-title">Sponsorluk Anlaşması</div>
-              <div class="s-sub">Küresel Rekabet Yasakları</div>
-            </div>
-            <div style="color:var(--dim);">›</div>
-          </div>
-          <div class="s-row" onclick="openContractModal('rep')">
-            <div class="s-icon" style="background:rgba(201,162,39,0.15); color:var(--gold);">🌍</div>
-            <div class="s-info">
-              <div class="s-title">İl Temsilcisi Franchise</div>
-              <div class="s-sub">Bölgesel Tekel Hakları</div>
-            </div>
-            <div style="color:var(--dim);">›</div>
-          </div>
-          <div class="s-row" onclick="openContractModal('club')">
-            <div class="s-icon" style="background:rgba(139,47,255,0.15); color:var(--purple);">🛡️</div>
-            <div class="s-info">
-              <div class="s-title">Kulüp İzleme Lisansı</div>
-              <div class="s-sub">Yetiştirme Bedeli Taahhüdü</div>
-            </div>
-            <div style="color:var(--dim);">›</div>
-          </div>
-          <div class="s-row" onclick="openContractModal('federation')">
-            <div class="s-icon" style="background:rgba(232,69,69,0.15); color:var(--red);">🏛️</div>
-            <div class="s-info">
-              <div class="s-title">Federasyon Entegrasyonu</div>
-              <div class="s-sub">Resmi Veri İşleme Ağı</div>
-            </div>
-            <div style="color:var(--dim);">›</div>
-          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+          </label>
         </div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-title">Giyilebilir Cihaz Senkronu</div>
+            <div class="setting-desc">Apple Watch, WHOOP arka plan veri aktarımı</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- HUKUK VE SÖZLEŞMELER -->
+      <div class="sec-hdr-settings">Hukuk & Resmi Sözleşmeler</div>
+      <div class="setting-group" style="padding:0;">
+        <div class="s-row" onclick="openContractModal('athlete')" style="margin:0; padding:12px 14px; border-bottom:1px solid rgba(255,255,255,0.05); border-radius:0;">
+          <div class="s-icon" style="background:rgba(26,79,255,0.15); color:var(--blue);">🏃</div>
+          <div class="s-info">
+            <div class="s-title">Sporcu İmaj Sözleşmesi</div>
+            <div class="s-sub">Performans ve KVKK Metni</div>
+          </div>
+          <div style="color:var(--dim);">›</div>
+        </div>
+        <div class="s-row" onclick="openContractModal('sponsor')" style="margin:0; padding:12px 14px; border-bottom:1px solid rgba(255,255,255,0.05); border-radius:0;">
+          <div class="s-icon" style="background:rgba(0,185,122,0.15); color:var(--green);">🤝</div>
+          <div class="s-info">
+            <div class="s-title">Sponsorluk Anlaşması</div>
+            <div class="s-sub">Küresel Rekabet Yasakları</div>
+          </div>
+          <div style="color:var(--dim);">›</div>
+        </div>
+        <div class="s-row" onclick="openContractModal('club')" style="margin:0; padding:12px 14px; border-radius:0;">
+          <div class="s-icon" style="background:rgba(139,47,255,0.15); color:var(--purple);">🛡️</div>
+          <div class="s-info">
+            <div class="s-title">Kulüp İzleme Lisansı</div>
+            <div class="s-sub">Yetiştirme Bedeli Taahhüdü</div>
+          </div>
+          <div style="color:var(--dim);">›</div>
+        </div>
+      </div>
+
+      <!-- SİSTEM (KALDIRIM MÜHENDİSİ MODU) -->
+      <div class="sec-hdr-settings">Geliştirici & Sistem</div>
+      <div class="setting-group">
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-title" style="color:var(--gold);">Kaldırım Mühendisi Modu</div>
+            <div class="setting-desc">Hata ayıklama ve derin analiz telemetrisi</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" onclick="t('Kaldırım Mühendisi Modu Aktif!')">
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-row">
+          <div class="setting-info">
+            <div class="setting-title" style="color:var(--red);">Hesabı Sil</div>
+            <div class="setting-desc">Tüm verileri kalıcı olarak yok et</div>
+          </div>
+          <div style="color:var(--dim);">›</div>
+        </div>
+      </div>
+      
+      <div style="text-align:center; color:var(--muted); font-size:9px; margin-top:30px; margin-bottom:20px;">
+        Y SPORTS OS v4.0 - Build 1004<br>Developed by AI Kaldirim Muhendisi
       </div>
     </div>
   </div>
